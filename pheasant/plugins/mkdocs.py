@@ -136,7 +136,8 @@ class PheasantPlugin(BasePlugin):
         server.watch(root, builder)
         watcher.ignore_dirs(".pheasant_cache")
         for path in self.config["sys_paths"]:
-            watcher.ignore_dirs(path)
+            if path in server._watched_paths:
+                server._watched_paths.remove(path)
         return server
 
 
