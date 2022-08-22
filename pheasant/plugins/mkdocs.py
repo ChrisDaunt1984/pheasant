@@ -130,11 +130,8 @@ class PheasantPlugin(BasePlugin):
 
     def on_serve(self, server, config, builder):
         self.converter.dirty = self.config["dirty"]
-        watcher = server.watcher
-        # builder = list(watcher._tasks.values())[0]["func"]
         root = os.path.join(os.path.dirname(pheasant.__file__), "theme")
-        server.watch(root, builder)
-        watcher.ignore_dirs(".pheasant_cache")
+        w = server.watch(root, builder)
         for path in self.config["sys_paths"]:
             if path in server._watched_paths:
                 server._watched_paths.remove(path)
